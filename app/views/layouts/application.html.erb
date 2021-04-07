@@ -19,28 +19,28 @@
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
 
-    <p class="navbar-text float-right">
-    <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% else %>
-      <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-    <% end %>
-    </p>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
-        <a class="navbar-brand" href="/">The Idea App</a>
+        <a class="navbar-brand" href="/">Drone Winnipeg</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/ideas">Ideas</a>
+              <a class="nav-link" href="/products">Products</a>
             </li>
           </ul>
+          <p class="navbar-text float-right">
+          <% if user_signed_in? %>
+            Logged in as <strong><%= current_user.email %></strong>.
+            <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+          <% else %>
+            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          <% end %>
+          </p>
         </div>
       </div>
     </nav>
@@ -49,7 +49,7 @@
     </div>
     <footer>
       <div class="container">
-        Rails Girls <%= Time.now.year %>
+        Drone Winnipeg <%= Time.now.year %>
       </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
