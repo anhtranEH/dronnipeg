@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'orders/index'
-  get 'orders/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -9,4 +7,5 @@ Rails.application.routes.draw do
   resources :home
   resources :products
   resources :categories
+  resources :orders
 end
