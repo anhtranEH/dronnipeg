@@ -1,0 +1,17 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Order Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%@orders.each do |order|%>
+        <tr>
+          <td><%=link_to order.id, order_path(order.id)%></td>
+          <td><%=order.order_date%></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+  <%=paginate @orders, window: 2%>
