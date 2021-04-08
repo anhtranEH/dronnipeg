@@ -27,8 +27,10 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'activeadmin'
 gem 'devise'
+gem 'formtastic', '~> 4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

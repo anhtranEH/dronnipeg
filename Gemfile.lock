@@ -264,7 +264,9 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise
+  formtastic (~> 4.0)
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.3)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
