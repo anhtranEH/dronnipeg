@@ -1,0 +1,5 @@
+<p><%=product.name%></p>
+<p>Price: <%=product.price%> $</p>
+<p>Description: <%=product.description%></p>
+<p>Battery Life: <%=product.battery_life%> min</p>
+<p><%=image_tag(product.image, class: "card-img-top", style: "width: auto; max-height: 190px;") rescue nil%></p >
