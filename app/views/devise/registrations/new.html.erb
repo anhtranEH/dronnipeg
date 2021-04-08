@@ -34,6 +34,10 @@
   </div>
 
   <div class="field">
+  <%= f.select :province_id, options_for_select(Province.all.pluck(:name, :id)) %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
