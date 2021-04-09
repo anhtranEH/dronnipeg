@@ -17,9 +17,22 @@ class CartController < ApplicationController
     id = params[:product_id]
     session[:cart].delete(id)
     flash[:notice] = "Remove #{Product.find(id).name} to cart"
+    redirect_to cart_index_path
   end
 
   def update_cart
-    debugger
+    if params.has_value?("Remove")
+      id = params.select{ |k,v| v == 'Remove' }.keys.first.split('_').last
+      session[:cart].delete(id)
+      flash[:notice] = "Remove #{Product.find(id).name} to cart"
+    else
+      current_cart = session[:cart]
+      current_cart.keys.each do |k|
+        current_cart[k] = params[k].to_i if params[k].present?
+      end
+      session[:cart] = current_cart
+      flash[:notice] = "Updated!"
+    end
+    redirect_to cart_index_path
   end
 end

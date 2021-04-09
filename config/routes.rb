@@ -14,11 +14,9 @@ Rails.application.routes.draw do
     get "cancel", to: "checkout#cancel", as: "checkout_cancel"
   end
 
-  resources :cart do
+  resources :cart, only: %i[create index] do
     collection do
-      post :create
-      post :destroy
-      get :index
+      post :update_cart
     end
   end
 end
