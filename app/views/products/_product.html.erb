@@ -3,11 +3,7 @@
 <p>Description: <%=product.description%></p>
 <p>Battery Life: <%=product.battery_life%> min</p>
 <p><%=image_tag(product.image.variant(resize_to_limit: [200,200]).processed) rescue nil%></p >
-  <%= form_with url: cart_index_path, remote: true, local: false do %>
+  <%= form_with url: cart_index_path do %>
     <%= hidden_field_tag(:product_id, product.id)%>
     <%= button_tag("Add To Cart") %>
-  <% end %>
-  <%= form_with url: checkout_create_path, remote: true, local: false do %>
-    <%= hidden_field_tag(:product_id, product.id)%>
-    <%= button_tag("Buy Now") %>
   <% end %>

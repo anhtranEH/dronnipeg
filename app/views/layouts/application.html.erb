@@ -37,6 +37,10 @@
             <li class="nav-item">
               <a class="nav-link" href="/orders">Orders</a>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/cart">Carts (<%=session[:cart].uniq.length%>)</a>
+            </li>
           </ul>
           <p class="navbar-text float-right">
           <% if user_signed_in? %>
