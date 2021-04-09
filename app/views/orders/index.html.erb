@@ -3,6 +3,8 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Order Date</th>
+        <th scope="col">Order Status</th>
+        <th scope="col">Grand Total</th>
       </tr>
     </thead>
     <tbody>
@@ -10,6 +12,12 @@
         <tr>
           <td><%=link_to order.id, order_path(order.id)%></td>
           <td><%=order.order_date%></td>
+          <td>
+            <%="New" if order.order_state == 1%>
+            <%="Unpaid" if order.order_state == 3%>
+            <%="Paid" if order.order_state == 2%>
+          </td>
+          <td><%=number_with_precision(order.grand_total, strip_insignificant_zeros: true, precision: 2, separator: '.', delimiter: ',')%> $ </td>
         </tr>
       <%end%>
     </tbody>

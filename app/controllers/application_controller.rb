@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :initialize_session
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  helper_method :cart
+  helper_method :cart, :cart_size
 
   protected
 
@@ -20,5 +20,9 @@ class ApplicationController < ActionController::Base
 
   def cart
     Product.find(session[:cart].keys)
+  end
+
+  def cart_size
+    session[:cart].values.inject(0) { |sum, value| sum + value }
   end
 end
