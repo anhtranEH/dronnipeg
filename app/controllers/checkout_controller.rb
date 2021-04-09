@@ -16,12 +16,12 @@ class CheckoutController < ApplicationController
         description: product.description,
         amount:      product.price.to_i,
         currency:    "cad",
-        quantity:    current_cart[product.id].to_i
+        quantity:    current_cart[product.id.to_s].to_i
       }
     end
 
     sub_total = cart.inject(0) do |sum, item|
-      sum + (item.price.to_i * current_cart[product.id].to_i)
+      sum + (item.price.to_i * current_cart[item.id.to_s].to_i)
     end
 
     gst = current_user.province.gst
@@ -57,13 +57,22 @@ class CheckoutController < ApplicationController
     line_items << pst_info if pst != 0
 
     total_tax = sub_total * ( gst + hst + pst )
-    Order.create(order_date: DateTime.now, order_state: 1, total_tax: total_tax , grand_total: sub_total + total_tax, user_id: current_user.id)
+    order = Order.create(order_date: DateTime.now, order_state: 1, total_tax: total_tax , grand_total: sub_total + total_tax, user_id: current_user.id)
+    cart.each do |product|
+      OrderDetail.create(price: product.price,
+                         quantity: current_cart[product.id.to_s],
+                         product_id: product.id,
+                         order_id: order.id,
+                         tax_rate: gst + hst + pst )
+    end
 
+    debugger
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
       success_url:         checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url:          checkout_cancel_url,
-      line_items:          line_items)
+      line_items:          line_items
+    )
 
     # @session.id <== is autopopulated from this process!
 
@@ -78,6 +87,8 @@ class CheckoutController < ApplicationController
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
     @customer = current_user
+    #Retrieve current order object and display in view
+    #Update order status to paid, add payment id
   end
 
   def cancel
