@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_045658) do
+ActiveRecord::Schema.define(version: 2021_04_09_050002) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -77,11 +77,11 @@ ActiveRecord::Schema.define(version: 2021_04_09_045658) do
     t.decimal "price"
     t.decimal "quantity"
     t.integer "product_id"
-    t.integer "orders_id"
+    t.integer "order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "tax_rate"
-    t.index ["orders_id"], name: "index_order_details_on_orders_id"
+    t.index ["order_id"], name: "index_order_details_on_order_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
   end
 
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_045658) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "order_details", "orders", column: "orders_id"
+  add_foreign_key "order_details", "orders"
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
