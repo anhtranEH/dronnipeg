@@ -1,0 +1,35 @@
+<p>Order ID: <%=link_to order.id, order_path(order.id)%></p>
+<p> Status:
+            <%=order.status_name%>
+</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Tax</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%order.order_details.each do |order_detail|%>
+      <tr>
+        <td>
+          <div><p><%=link_to order_detail&.product.name, products_path(order_detail&.product.id)%></p>
+            <p><%=image_tag(order_detail&.product.image.variant(resize_to_limit: [200,200]).processed) rescue nil%></p >
+          </div>
+        </td>
+        <td>
+          <p><%=order_detail.quantity.to_i%></p>
+        </td>
+        <td><%=order_detail.price.to_i%> $</td>
+        <td><%=order_detail.price.to_i * order_detail.quantity%> $</td>
+        <td><%=order_detail.price.to_i * order_detail.quantity * order_detail.tax_rate%> $</td>
+        <td><%=order_detail.price.to_i *  order_detail.quantity * (1 + order_detail.tax_rate)%> $</td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+<p>Grand Total: <%=order.grand_total%></p>

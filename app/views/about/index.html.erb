@@ -1,0 +1,29 @@
+<div>
+  <h1>About Coin Raning </h1>
+  <h2>Description</h2>
+  <p>A website to provide general information of top 200 cryptocurrencies from COINRANKING API</p>
+  <div>
+    The website offers the following data:
+    # General information for each cryptocurrency
+    API: https://api.coinranking.com/v2/coins
+    Coin will be stored in table "coins" with following column:
+
+    # All related pairs for each exchange
+    API: https://api.coinranking.com/v2/marketes
+    Pairs will be store in table "markets" with following column:
+
+    # All related exchanges
+    API: https://api.coinranking.com/v2/exchanges
+
+    top 200 coins will be pulled from the coin endpoint and store in "coins" table
+    top 200 exchanges will be pulled from the exchange endpoint and store in "coins" table
+    top 200 markets(pairs) will be pulled from the market endpoint. By finding the related base_coin and quote_coin, a new market record will be created and stored in the "markets" table
+    From the created markets, all the related exchanges (which have listed this market) will be stored in the "market_exchanges" table. By that way, an exchange could retrieve all of its related markets as well.
+
+  </div>
+  <br>
+  <h2>ERD</h2>
+  <img src="erd.png" alt="erd"/>
+  <br>
+</div>
+

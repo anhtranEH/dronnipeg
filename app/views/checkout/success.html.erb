@@ -1,0 +1,4 @@
+<p>Hi <%= @customer.first_name%>, Thank for your purchase</p>
+<p> We will ship to address: <%=current_user.address%> </p>
+<p> Here is your order info </p>
+<%= render partial: @order %>

@@ -1,0 +1,41 @@
+<h1> Carts </h1>
+<% if cart.empty? %>
+  <p>Your cart is empty </p>
+<%else%>
+  <%=form_with url: update_cart_cart_index_path do |f| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%cart.each do |product|%>
+          <tr>
+            <td>
+              <div><p><%=link_to product.name, products_path(product.id)%></p>
+                <p><%=image_tag(product.image.variant(resize_to_limit: [200,200]).processed) rescue nil%></p >
+              </div>
+            </td>
+            <td>
+              <input type="text" id="<%=product.id%>" name="<%=product.id%>" value="<%=@current_cart[product.id.to_s]%>">
+            </td>
+            <td><%=product.price%></td>
+            <td><%=product.price * @current_cart[product.id.to_s]%></td>
+            <td>
+              <%= f.submit "Remove", name: "remove_item_#{product.id}"%>
+            </td>
+          </tr>
+        <%end%>
+      </tbody>
+      <%= f.submit "Update", name: "update_item"%>
+    </table>
+  <%end%>
+  <%=form_with url: checkout_create_path, remote:true, local: false do %>
+    <input type="submit" value="Checkout">
+  <%end%>
+<%end%>
