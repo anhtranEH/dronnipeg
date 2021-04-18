@@ -67,7 +67,7 @@ class CheckoutController < ApplicationController
 
     # @session.id <== is autopopulated from this process!
 
-    order = Order.create(order_date: DateTime.now, order_state: 1, total_tax: total_tax/100 , grand_total: (sub_total + total_tax)/100, user_id: current_user.id, payment_id: @session.payment_intent)
+      order = Order.create(order_date: DateTime.now, order_status: OrderStatus.get_status("new"), total_tax: total_tax/100 , grand_total: (sub_total + total_tax)/100, user_id: current_user.id, payment_id: @session.payment_intent)
     cart.each do |product|
       OrderDetail.create(price: product.price,
                          quantity: current_cart[product.id.to_s],
@@ -81,16 +81,12 @@ class CheckoutController < ApplicationController
   end
 
   def success
-    # WE TOOK YO MONEY!
-    # stripe success_url +"?session_id={CHECKOUT_SESSION_ID}"
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
     @customer = current_user
     session[:cart] = {}
     @order = Order.find_by(payment_id: @payment_intent.id)
-    @order.update(order_state: 2)
-    #Retrieve current order object and display in view
-    #Update order status to paid, add payment id
+    @order.update(order_status: OrderStatus.get_status('paid'))
   end
 
   def cancel
