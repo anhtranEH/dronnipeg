@@ -1,0 +1,8 @@
+<h1> Search Result </h1>
+<div class="container">
+  <div class="row display-flex">
+    <% @products.each do |product| %>
+      <%= render partial: "product", locals: { product: product } %>
+    <% end %>
+  </div>
+</div>

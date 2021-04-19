@@ -6,4 +6,9 @@ class ProductsController < ApplicationController
   def show
     @product = Product.includes(:category).find(params[:id])
   end
+
+  def search
+    @products = Product.search_product(params[:search], params[:category])
+    render 'index'
+  end
 end

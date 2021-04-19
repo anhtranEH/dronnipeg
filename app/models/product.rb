@@ -6,5 +6,14 @@ class Product < ApplicationRecord
 
   validates :category, presence: true
   validates :price, :battery_life, numericality: true
-  validates :description, :price, :battery_life, presence: true
+  validates :description, :price, :battery_life, :name, presence: true
+
+  def self.search_product(keyword, category)
+    if category != 'All'
+      Product.where("name LIKE '%#{keyword}%' OR description LIKE '%#{keyword}%'")
+             .where(category_id: category)
+    else
+      Product.where("name LIKE '%#{keyword}%' OR description LIKE '%#{keyword}%'")
+    end
+  end
 end

@@ -1,6 +1,12 @@
 <h1> Products </h1>
 <div class="container">
   <h1> Home Page </h1>
+  <%=form_with url: search_products_path, method: :get do |f| %>
+    <%= f.label "Categories" %>
+    <%= f.select :category , options_for_select(["All"] + Category.all.map{ |c| [c.name, c.id] }, params[:category])%>
+    <%= f.text_field :search %>
+    <%= f.submit "Search"%>
+  <% end%>
   <div class="row display-flex">
     <% @products.each do |product| %>
       <%= render partial: "product", locals: { product: product } %>
