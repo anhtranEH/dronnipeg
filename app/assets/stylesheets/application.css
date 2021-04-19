@@ -14,3 +14,15 @@
  *= require_self
  */
 
+.card-text {
+  margin-left: 30px;
+}
+
+.card-title {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+select#category {
+  height: 30px;
+}

@@ -1,14 +1,11 @@
 class CheckoutController < ApplicationController
   def create
-    # establish a connection with Stripe!
-    # redirect the user back to a payment screen
     current_cart = session[:cart]
 
     if current_cart.empty?
       redirect_to root_path
       return
     end
-
 
     line_items = cart.map do |product|
       {
@@ -56,24 +53,31 @@ class CheckoutController < ApplicationController
     line_items << gst_info if gst != 0
     line_items << pst_info if pst != 0
 
-    total_tax = sub_total * ( gst + hst + pst )
+    total_tax = sub_total * (gst + hst + pst)
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
-      success_url:         checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url:          checkout_cancel_url,
-      line_items:          line_items
+      success_url:          "#{checkout_success_url}?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url:           checkout_cancel_url,
+      line_items:           line_items
     )
 
     # @session.id <== is autopopulated from this process!
 
-      order = Order.create(order_date: DateTime.now, order_status: OrderStatus.get_status("new"), total_tax: total_tax/100 , grand_total: (sub_total + total_tax)/100, user_id: current_user.id, payment_id: @session.payment_intent)
+    order = Order.create(
+      order_date:   DateTime.now,
+      order_status: OrderStatus.get_status("new"),
+      total_tax:    total_tax / 100,
+      grand_total:  (sub_total + total_tax) / 100,
+      user_id:      current_user.id,
+      payment_id:   @session.payment_intent
+    )
     cart.each do |product|
-      OrderDetail.create(price: product.price,
-                         quantity: current_cart[product.id.to_s],
+      OrderDetail.create(price:      product.price,
+                         quantity:   current_cart[product.id.to_s],
                          product_id: product.id,
-                         order_id: order.id,
-                         tax_rate: gst + hst + pst )
+                         order_id:   order.id,
+                         tax_rate:   gst + hst + pst)
     end
     respond_to do |format|
       format.js # render app/views/checkout/create.js.erb
@@ -86,15 +90,10 @@ class CheckoutController < ApplicationController
     @customer = current_user
     session[:cart] = {}
     @order = Order.find_by(payment_id: @payment_intent.id)
-    @order.update(order_status: OrderStatus.get_status('paid'))
+    @order.update(order_status: OrderStatus.get_status("paid"))
   end
 
   def cancel
     # Something went wrong
-  end
-
-  private
-
-  def tax_generator
   end
 end
