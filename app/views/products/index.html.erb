@@ -1,11 +1,9 @@
 <h1> Products </h1>
 <div class="container">
   <h1> Home Page </h1>
-  <div class="row">
+  <div class="row display-flex">
     <% @products.each do |product| %>
-      <div class="column">
-        <%= render partial: "product", locals: { product: product } %>
-      </div>
+      <%= render partial: "product", locals: { product: product } %>
     <% end %>
   </div>
 </div>
