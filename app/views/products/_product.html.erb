@@ -3,7 +3,7 @@
     <div class="card-block h-100">
       <h4 class="card-title"><%=link_to product.name, product_path(product.id)%></h4>
       <div class="card-text h-100">
-        <p class="card-text h-40" ><%=image_tag(product.image.variant(resize_to_limit: [300,300]).processed) rescue nil%></p >
+        <p class="card-text h-40" ><%=image_tag(product.image.variant(resize_to_limit: [300,300]).processed, alt: "#{product.name}") rescue nil%></p >
         <p >Price: <%=product.price%> $</p>
         <p >Description: <%=product.description%></p>
         <p >Battery Life: <%=product.battery_life%> min</p>
@@ -11,7 +11,7 @@
     </div>
     <div class="card-footer">
       <%= form_with url: cart_index_path do %>
-        <%= hidden_field_tag(:product_id, product.id)%>
+        <%= hidden_field_tag(:product_id, product.id, :id => "product_id_#{product.id}")%>
         <%= button_tag("Add To Cart") %>
       <% end %>
     </div>

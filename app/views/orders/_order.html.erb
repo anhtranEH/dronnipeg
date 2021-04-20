@@ -18,7 +18,7 @@
       <tr>
         <td>
           <div><p><%=link_to order_detail&.product.name, products_path(order_detail&.product.id)%></p>
-            <p><%=image_tag(order_detail&.product.image.variant(resize_to_limit: [200,200]).processed) rescue nil%></p >
+            <p><%=image_tag(order_detail&.product.image.variant(resize_to_limit: [200,200]).processed, alt: "#{order_detail&.product&.name}") rescue nil%></p >
           </div>
         </td>
         <td>
