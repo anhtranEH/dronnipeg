@@ -12,7 +12,7 @@
     <div class="card-footer">
       <%= form_with url: cart_index_path do %>
         <%= hidden_field_tag(:product_id, product.id, :id => "product_id_#{product.id}")%>
-        <%= button_tag("Add To Cart") %>
+        <%= button_tag("Add To Cart", class: "btn btn-primary") %>
       <% end %>
     </div>
   </div>

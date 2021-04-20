@@ -33,9 +33,10 @@
         <%end%>
       </tbody>
     </table>
-    <%= f.submit "Update", name: "update_item"%>
+    <%= f.submit "Update", name: "update_item", class: "btn btn-primary"%>
   <%end%>
-  <%=form_with url: checkout_create_path, remote:true, local: false do %>
-    <input type="submit" value="Checkout">
+  <br>
+  <%=form_with url: checkout_create_path, remote:true, local: false do |f| %>
+    <%= f.submit "Checkout", name: "checkout", class: "btn btn-success"%>
   <%end%>
 <%end%>
