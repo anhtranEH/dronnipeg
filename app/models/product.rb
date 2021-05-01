@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_one_attached :image
+  has_one_attached :image, service: :amazon
   belongs_to :category
   has_many :order_details, dependent: :destroy
   has_many :order, through: :order_details

@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2021_04_18_172539) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
@@ -29,8 +32,8 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -76,8 +79,8 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
   create_table "order_details", force: :cascade do |t|
     t.decimal "price"
     t.decimal "quantity"
-    t.integer "product_id"
-    t.integer "order_id"
+    t.bigint "product_id"
+    t.bigint "order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "tax_rate"
@@ -95,11 +98,11 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
     t.date "order_date"
     t.decimal "total_tax"
     t.decimal "grand_total"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "payment_id"
-    t.integer "order_status_id"
+    t.bigint "order_status_id"
     t.index ["order_status_id"], name: "index_orders_on_order_status_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -109,7 +112,7 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
     t.decimal "price"
     t.text "description"
     t.decimal "battery_life"
-    t.integer "category_id"
+    t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_products_on_category_id"
@@ -137,7 +140,7 @@ ActiveRecord::Schema.define(version: 2021_04_18_172539) do
     t.string "postal_code"
     t.string "address"
     t.string "city"
-    t.integer "province_id"
+    t.bigint "province_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["province_id"], name: "index_users_on_province_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

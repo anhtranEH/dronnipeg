@@ -23,10 +23,12 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    Product.find(session[:cart].keys)
+    Product.where(id: session[:cart].keys)
   end
 
   def cart_size
-    session[:cart].values.inject(0) { |sum, value| sum + value }
+    return 0 if cart.empty?
+
+    cart.inject(0) { |sum, item| sum + session[:cart][item.id.to_s] }
   end
 end
