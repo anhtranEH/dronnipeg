@@ -3,13 +3,11 @@
   <h1> Home Page </h1>
   <%=form_with url: search_products_path, method: :get do |f| %>
     <%= f.label :category, "Categories" %>
-    <%= f.select :category , options_for_select(["All"] + Category.all.map{ |c| [c.name, c.id] }, params[:category])%>
+    <%= f.select :category , option_for_category(@current_category)%>
     <%= f.text_field :search %>
     <%= f.submit "Search", class: "btn btn-primary"%>
   <% end%>
   <div class="row display-flex">
-    <% @products.each do |product| %>
-      <%= render partial: "product", locals: { product: product } %>
-    <% end %>
+    <%= render @products %>
   </div>
 </div>
